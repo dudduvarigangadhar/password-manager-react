@@ -13,7 +13,7 @@ body {
 
 .password-manager-bg-container {
   background-image: linear-gradient(to bottom, #9ba9eb, #c3caea);
-  height: 100vh;
+  min-height: 100vh;
   background-size: cover;
   width: 60vw;
   padding-right: 45px;
@@ -30,10 +30,27 @@ body {
   background-color: #5763a5;
   border-radius: 5px;
   padding: 20px;
-  height: 300px;
+  height: 320px;
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
+}
+
+.button {
+  background-color: #0b69ff;
+  color: #ffffff;
+  font-family: 'Roboto';
+  border: none;
+  width: 80px;
+  padding: 6px;
+  margin-right: 29px;
+  border-radius: 5px;
+}
+
+.add-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 .password-manager-image {
@@ -50,6 +67,7 @@ body {
 
 .add-password-heading {
   color: #f8fafc;
+  font-size: 20px;
   font-family: 'Roboto';
 }
 
@@ -89,7 +107,7 @@ body {
 .your-password-container {
   background-color: #5763a5;
   border-radius: 5px;
-  height: 300px;
+  min-height: 300px;
   margin-top: 10px;
   padding: 20px;
 }
@@ -113,6 +131,7 @@ body {
   font-family: 'Roboto';
   color: #ffffff;
   font-weight: bold;
+  font-size: 20px;
   display: flex;
   align-self: center;
 }
@@ -147,6 +166,83 @@ body {
   /* text-align: center; */
 }
 
-.check-box {
-  /* height: 20px; */
+.no-password-image {
+  height: 150px;
+  text-align: center;
+}
+
+.no-password-image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-password-heading {
+  font-family: 'Roboto';
+  font-weight: bold;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 576px) {
+  .password-manager-bg-container {
+    width: 100vw;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .password-manager-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.eachPassword-container {
+  border: 2px solid #64748b;
+  width: 250px;
+  height: 100px;
+  line-height: 0.6;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  list-style-type: none;
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+.details {
+  font-family: 'Roboto';
+  font-size: 10px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.stars-image {
+  height: 10px;
+}
+
+.delete-image {
+  height: 25px;
+  margin-left: 20px;
+}
+
+.username-title {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  text-align: center;
+  padding-top: 12px;
+  background-color: #10b981;
+  margin-right: 20px;
+  color: #f8fafc;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
