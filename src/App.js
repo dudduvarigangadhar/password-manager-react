@@ -3,7 +3,7 @@ import {Component} from 'react'
 import {v4 as uuidv4} from 'uuid'
 import './App.css'
 
-const colorList = ['yellow', 'green', 'orange', 'brown', 'blue']
+const colorList = ['yellow', 'green', 'orange', 'red', 'blue']
 
 class App extends Component {
   state = {
@@ -13,10 +13,10 @@ class App extends Component {
     password: '',
     searchList: '',
     isShow: false,
+    isTrue: false,
   }
 
   onChangeWebsite = event => {
-    // console.log(event.target.value)
     this.setState({website: event.target.value})
   }
 
@@ -30,14 +30,14 @@ class App extends Component {
 
   onChangeSearch = event => {
     this.setState({searchList: event.target.value})
-    // console.log(event.target.value)
   }
 
   onAddWebsite = event => {
     event.preventDefault()
-    const {website, username, password, searchList} = this.state
+    const {website, username, password} = this.state
     const title = website.slice(0, 1).toUpperCase()
     const colorValue = colorList[Math.floor(Math.random() * 5)]
+    console.log(colorValue)
     const newPassword = {
       id: uuidv4(),
       website,
@@ -71,22 +71,6 @@ class App extends Component {
     this.setState({passwordList: deleteList})
   }
 
-  noPasswords = count => {
-    if (count === 0) {
-      return (
-        <div className="no-password-image-container">
-          <img
-            src="https://assets.ccbp.in/frontend/react-js/no-passwords-img.png"
-            alt="no passwords"
-            className="no-password-image"
-          />
-          <p className="no-password-heading">No Passwords</p>
-        </div>
-      )
-    }
-    return null
-  }
-
   render() {
     const {
       website,
@@ -96,23 +80,20 @@ class App extends Component {
       searchList,
       isShow,
     } = this.state
-    const count = passwordList.length
-    if (searchList !== '') {
-      const searchResult = passwordList.filter(eachPassword =>
-        eachPassword.website.toLowerCase().includes(searchList.toLowerCase()),
-      )
-      //   console.log(searchResult)
-      //   this.setState({passwordList: searchResult})
-      // .includes(searchList.toLowerCase()),
-      //   this.setState({passwordList: searchResult})
-    }
+    let {isTrue} = this.state
 
-    // if (searchList.length !== 0) {
-    //   const newList = passwordList.filter(eachPassword =>
-    //     eachPassword.website.toLowerCase().includes(searchList.toLowerCase()),
-    //   )
-    //   this.setState({passwordList: newList})
-    // }
+    const count = passwordList.length
+
+    const searchResult = passwordList.filter(eachPassword =>
+      eachPassword.website.toLowerCase().includes(searchList.toLowerCase()),
+    )
+    console.log(searchResult.length)
+
+    if (searchResult.length === 0) {
+      isTrue = false
+    } else {
+      isTrue = true
+    }
 
     return (
       <div className="password-manager-bg-container">
@@ -124,7 +105,7 @@ class App extends Component {
           />
         </div>
         <div className="password-manager-container">
-          <form className="add-password-container">
+          <form className="add-password-container" onSubmit={this.onAddWebsite}>
             <h1 className="add-password-heading">Add New Password</h1>
             <div className="input-field-container">
               <div className="input-field-logo-container">
@@ -178,7 +159,7 @@ class App extends Component {
               <button
                 type="submit"
                 className="button"
-                onClick={this.onAddWebsite}
+                // onClick={this.onAddWebsite}
               >
                 Add
               </button>
@@ -229,12 +210,23 @@ class App extends Component {
               </label>
             </div>
           </div>
-          {this.noPasswords(count)}
-          {count !== 0 ? (
+          {!isTrue && (
+            <div className="no-password-image-container">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/no-passwords-img.png"
+                alt="no passwords"
+                className="no-password-image"
+              />
+              <p className="no-password-heading">No Passwords</p>
+            </div>
+          )}
+          {isTrue && (
             <ul className="list-container">
-              {passwordList.map(eachPassword => (
+              {searchResult.map(eachPassword => (
                 <li className="eachPassword-container" key={eachPassword.id}>
-                  <p className="username-title">{eachPassword.title}</p>
+                  <p className={`${eachPassword.color} username-title`}>
+                    {eachPassword.title}
+                  </p>
                   <div>
                     <p className="details">{eachPassword.website}</p>
                     <p className="details">{eachPassword.username}</p>
@@ -248,16 +240,22 @@ class App extends Component {
                       />
                     )}
                   </div>
-                  <img
-                    src="https://assets.ccbp.in/frontend/react-js/password-manager-delete-img.png"
-                    alt="delete"
-                    className="delete-image"
+                  <button
+                    type="button"
+                    className="delete-button"
+                    data-testid="delete"
                     onClick={() => this.onDelete(eachPassword.id)}
-                  />
+                  >
+                    <img
+                      src="https://assets.ccbp.in/frontend/react-js/password-manager-delete-img.png"
+                      alt="delete"
+                      className="delete-image"
+                    />
+                  </button>
                 </li>
               ))}
             </ul>
-          ) : null}
+          )}
         </div>
       </div>
     )
